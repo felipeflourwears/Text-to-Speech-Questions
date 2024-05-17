@@ -2,6 +2,7 @@ import pygame
 from gtts import gTTS
 import time
 import io
+import importlib
 
 def speak_and_display(text, lang='en', wait_time=15):
     # Convertir texto a voz
@@ -39,17 +40,17 @@ def speak_and_display(text, lang='en', wait_time=15):
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    phrases = [
-        ("What’s your full name?", 'en'),
-        ("Spell your surname", 'en'),
-        ("Where are you from?", 'en'),
-        ("Talk briefly about your free time", 'en'),
-        ("Describe your personality", 'en'),
-        ("Describe the place where you live", 'en'),
-        ("Describe the place where you study", 'en')
-    ]
+    # Nombre del conjunto de frases a utilizar
+    phrases_set_name = 'phrases'  # Cambia esto al nombre del conjunto que desees usar
+
+    # Importar dinámicamente el módulo de frases
+    phrases_module = importlib.import_module('phrases')
     
-    for phrase, lang in phrases:
+    # Obtener el conjunto de frases por su nombre
+    phrases_set = getattr(phrases_module, phrases_set_name)
+    
+    # Usar el conjunto de frases seleccionado
+    for phrase, lang in phrases_set:
         speak_and_display(phrase, lang)
     
     pygame.quit()
